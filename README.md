@@ -1,6 +1,6 @@
 # Expected Goals Model for the NHL
 
-This is the code used to create an xG model for the NHL. Expected Goals is the probability in which each particular shot has to be a goal. The model uses a wide ranging set of features for training and the final result is the prediction of each shot's expected goal probability. The data included in this model begins in the 2007-2008 regular season and runs through the 2021-2022 regular season. The data was scraped from the NHL API and ESPN XML files.
+This is the code used to create an xG model for the NHL. Expected Goals is the probability in which each particular shot has to be a goal. The model uses a wide ranging set of features for training and the final result is the prediction of each shot's expected goal probability. The data included in this model begins in the 2007-2008 regular season and runs through the 2021-2022 regular season which consists of 1,365,583 shots. The data was scraped from the NHL API and ESPN XML files.
 
 # Features:
 1. Shot Distance
