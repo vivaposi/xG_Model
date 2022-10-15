@@ -246,6 +246,62 @@ def fit_logistic(features_train, labels_train):
 
     return cv_clf
 
+def fit_random_forest(features_train, labels_train):
+    """
+    Fit random forest and use cross validation to tune the hyperparameters
+
+    :return: classifier
+    """
+    param_grid = {
+        'min_samples_leaf': [50, 100, 250, 500]
+    }
+
+    clf = RandomForestClassifier(n_estimators=100, random_state=42, verbose=2)
+
+    # Tune hyperparameters
+    cv_clf = GridSearchCV(estimator=clf, param_grid=param_grid, cv=10)
+
+    print("Fitting Random Forest")
+
+    cv_clf.fit(features_train, labels_train)
+    print("\nRandom Forest Classifier:", cv_clf)
+
+    # Save model
+    pickle.dump(cv_clf, open("random_forest_xg.pkl", 'wb'))
+    return cv_clf
+
+def fit_xgboost(features_train, labels_train):
+    """
+    Fit a gradient boosting algorithm and use cross validation to tune the hyperparameters
+
+    :return: classifier
+    """
+    param_grid = {
+        "gamma": [0, 0.25, 1],
+        "reg_lambda": [0, 1, 10],
+        "scale_pos_weight": [1, 3, 5],
+        "subsample": [0.8],
+        "colsample_bytree": [0.5],
+        'max_depth': [3, 4, 5]
+    }
+
+    clf = XGBClassifier(n_estimators=500, eta=.1, random_state=42, verbosity=None)
+
+    print("Fitting Gradient Boosting Classifier")
+
+    # Tune hyperparameters
+    cv_clf = GridSearchCV(estimator=clf, param_grid=param_grid, cv=10)
+
+    # Fit classifier
+    cv_clf.fit(features_train, labels_train)
+
+    print("\nGradient Boosting Classifier:", cv_clf)
+
+    # Save model
+    pickle.dump(cv_clf, open("xgboost_xg.pkl", 'wb'))
+
+    return cv_clf
+
 
 def xg_model():
     """
