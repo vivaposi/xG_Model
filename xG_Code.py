@@ -327,11 +327,13 @@ def xg_model():
     
     ###### FIT MODELS
     log_clf = fit_logistic(features_train, labels_train)
-    
+    xg_clf = fit_xgboost(features_train, labels_train)
+    rf_clf = fit_random_forest(features_train, labels_train)
     
     #### Testing
     log_preds_probs = log_clf.predict_proba(features_test)
-    
+    xg_preds_probs = xg_clf.predict_proba(features_test)
+    rf_preds_probs = rf_clf.predict_proba(features_test)
 
     # Convert test labels to list instead of lists of lists
     flat_test_labels = [label[0] for label in labels_test]
@@ -339,12 +341,14 @@ def xg_model():
     ### LOG LOSS
     print("\nLog Loss: ")
     print("Logistic Regression: ", log_loss(flat_test_labels, log_preds_probs))
-    
+    print("XG Boost: ", log_loss(flat_test_labels, xg_preds_probs))
+    print("Random Forest: ", log_loss(flat_test_labels, rf_preds_probs))
 
     ### ROC
     preds = {
         "Logistic Regression": log_preds_probs,
-        
+        "XG Boost": xg_preds_probs,
+        "Random Forest": rf_preds_probs
     }
     get_roc(flat_test_labels, preds)
 
