@@ -30,9 +30,9 @@ Below are the ROC AUC scores for each model
 
 Log Loss for each model is as follows:
 
-XG Boost: 0.212
-Random Forest: 0.215
-Logistic Regression: 0.232
+-XG Boost: 0.212
+-Random Forest: 0.215
+-Logistic Regression: 0.232
 
 Very cleary the XG Boost model performed best. On the full dataset, in a game-level prediction, the model performance is as follows:
 
