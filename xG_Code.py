@@ -94,16 +94,15 @@ def clean_data(shots_sorted)
     shots_sorted['shotType'].fillna("NA", inplace=True)
 
     ### add score categories
-    ### stop at +3 and -3
     shots_sorted['score_cat'] = np.where(shots_sorted['homeTeamGoals'] - shots_sorted['awayTeamGoals'] >= 3, 3, np.where(shots_sorted['homeTeamGoals'] - shots_sorted['awayTeamGoals'] <= -3, -3, shots_sorted['homeTeamGoals'] - shots_sorted['awayTeamGoals']))
     shots_sorted['score_cat'] = np.where(shots_sorted['teamCode'] == shots_sorted['isHomeTeam'], shots_sorted['score_cat'], -shots_sorted['score_cat'])
-    shots_sorted['score_cat_3'] = np.where((shots_sorted['score_cat'] == 3), 1, 0)
+    shots_sorted['score_cat_3'] = np.where((shots_sorted['score_cat'] >= 3), 1, 0)
     shots_sorted['score_cat_2'] = np.where((shots_sorted['score_cat'] == 2), 1, 0)
     shots_sorted['score_cat_1'] = np.where((shots_sorted['score_cat'] == 1), 1, 0)
     shots_sorted['score_cat_0'] = np.where((shots_sorted['score_cat'] == 0), 1, 0)
     shots_sorted['score_cat_-1'] = np.where((shots_sorted['score_cat'] == -1), 1, 0)
     shots_sorted['score_cat_-2'] = np.where((shots_sorted['score_cat'] == -2), 1, 0)
-    shots_sorted['score_cat_-3'] = np.where((shots_sorted['score_cat'] == -3), 1, 0)
+    shots_sorted['score_cat_-3'] = np.where((shots_sorted['score_cat'] <= -3), 1, 0)
 
     ### only need these events
     shots_sorted = shots_sorted[shots_sorted.event.isin(["SHOT", "GOAL", "MISS"])]
@@ -127,7 +126,7 @@ shots_sorted.insert(0, 'shotID', first_column)
 def convert_rebound(shots_sorted)
 
     """"
-    Convert the data to use in model
+    Convert the data to use in expected rebounds model
     """"
 
     all_variables =
@@ -158,7 +157,7 @@ def convert_rebound(shots_sorted)
 def convert_goals(shots_sorted)
 
     """"
-    Convert the data to use in model
+    Convert the data to use in expected goals model
     """"
 
     all_variables =
